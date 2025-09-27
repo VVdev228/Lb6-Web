@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="uk">
+<head><meta charset="utf-8"><title>Shop</title></head>
+<body>
+  <h1>Список товарів</h1>
+  {% if products %}
+    <ul>
+      {% for p in products %}
+        <li>
+          <strong>{{ p.name }}</strong> — {{ p.price }} ₴
+          <em>(категорія: {{ p.category.name }})</em>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Поки що товарів немає.</p>
+  {% endif %}
+</body>
+</html>
