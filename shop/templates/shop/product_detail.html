@@ -1,0 +1,18 @@
+{% extends "shop/layout.html" %}
+
+{% block title %}Товар {{ product.name }}{% endblock %}
+
+{% block content %}
+  <h2>{{ product.name }}</h2>
+  <div class="section-actions">
+    <a class="btn-action" href="{% url 'shop:products_list' %}">До списку товарів</a>
+    <a class="btn-action" href="{% url 'shop:product_update' product.slug %}">Редагувати товар</a>
+    <a class="btn-danger" href="{% url 'shop:product_delete' product.slug %}">Видалити товар</a>
+  </div>
+  <div class="card">
+    <p><strong>ID:</strong> {{ product.id }}</p>
+    <p><strong>Назва:</strong> {{ product.name }}</p>
+    <p><strong>Ціна:</strong> {{ product.price }} ₴</p>
+    <p><strong>Категорія:</strong> <a class="link-inline" href="{% url 'shop:category_detail' product.category.slug %}">{{ product.category.name }}</a></p>
+  </div>
+{% endblock %}

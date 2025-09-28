@@ -5,15 +5,15 @@ from .models import Category, Product
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-   
-    list_display = ("id", "name", "products_count")
-  
-    search_fields = ("name",)
-    
+    list_display = ("id", "name", "slug", "products_count")
+    list_display_links = ("id",)
+    list_editable = ("name",)
+    list_filter = ("name",)
+    search_fields = ("name", "slug")
     ordering = ("name",)
     list_per_page = 25
+    prepopulated_fields = {"slug": ("name",)}
 
-    
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.annotate(products_total=Count("products"))
@@ -25,18 +25,13 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    
-    list_display = ("id", "name", "category", "price")
-    
+    list_display = ("id", "name", "slug", "category", "price")
     list_display_links = ("id", "name")
     list_editable = ("price",)
-
-    # поиск и фильтры
-    search_fields = ("name", "category__name")
+    search_fields = ("name", "slug", "category__name")
     list_filter = ("category",)
-
-    
-    list_select_related = ("category",) 
+    list_select_related = ("category",)
     ordering = ("name",)
     list_per_page = 25
-    autocomplete_fields = ("category",)  
+    autocomplete_fields = ("category",)
+    prepopulated_fields = {"slug": ("name",)}

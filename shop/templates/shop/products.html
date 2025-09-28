@@ -4,20 +4,44 @@
 
 {% block content %}
   <h2>Список товарів</h2>
+  <div class="section-actions">
+    <a class="btn-action" href="{% url 'shop:product_create' %}">Додати товар</a>
+  </div>
   {% if products %}
     <table class="table">
       <tr>
-        <th>ID</th><th>Назва</th><th>Ціна</th><th>Категорія</th>
+        <th>ID</th><th>Назва</th><th>Ціна</th><th>Категорія</th><th>Дії</th>
       </tr>
       {% for p in products %}
         <tr>
           <td>{{ p.id }}</td>
-          <td>{{ p.name }}</td>
+          <td><a class="link-inline" href="{% url 'shop:product_detail' p.slug %}">{{ p.name }}</a></td>
           <td>{{ p.price }} ₴</td>
-          <td><span class="badge">{{ p.category.name }}</span></td>
+          <td><a class="link-inline" href="{% url 'shop:category_detail' p.category.slug %}"><span class="badge">{{ p.category.name }}</span></a></td>
+          <td>
+            <a class="link-inline" href="{% url 'shop:product_update' p.slug %}">Редагувати</a>
+            <span class="divider">|</span>
+            <a class="link-danger" href="{% url 'shop:product_delete' p.slug %}">Видалити</a>
+          </td>
         </tr>
       {% endfor %}
     </table>
+
+    {% if is_paginated %}
+      <div class="card" style="margin-top:12px;">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; Перша</a>
+          <a href="?page={{ page_obj.previous_page_number }}">Попередня</a>
+        {% endif %}
+
+        <span>Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Наступна</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">Остання &raquo;</a>
+        {% endif %}
+      </div>
+    {% endif %}
   {% else %}
     <div class="card">Поки що товарів немає.</div>
   {% endif %}

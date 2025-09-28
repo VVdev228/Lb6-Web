@@ -1,0 +1,33 @@
+{% extends "shop/layout.html" %}
+
+{% block title %}Категорія {{ category.name }}{% endblock %}
+
+{% block content %}
+  <h2>{{ category.name }}</h2>
+  <div class="section-actions">
+    <a class="btn-action" href="{% url 'shop:categories_list' %}">До списку категорій</a>
+    <a class="btn-action" href="{% url 'shop:category_update' category.slug %}">Редагувати категорію</a>
+    <a class="btn-danger" href="{% url 'shop:category_delete' category.slug %}">Видалити категорію</a>
+  </div>
+
+  {% with products=category.products.all %}
+    <div class="card">
+      <p><strong>ID:</strong> {{ category.id }}</p>
+      <p><strong>Назва:</strong> {{ category.name }}</p>
+      <p><strong>Кількість товарів:</strong> {{ products|length }}</p>
+    </div>
+
+    <h3 class="section-title">Товари цієї категорії</h3>
+    {% if products %}
+      <div class="card">
+        <ul>
+          {% for product in products %}
+            <li><a class="link-inline" href="{% url 'shop:product_detail' product.slug %}">{{ product.name }}</a> — {{ product.price }} ₴</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% else %}
+      <div class="card">Поки що товарів немає.</div>
+    {% endif %}
+  {% endwith %}
+{% endblock %}

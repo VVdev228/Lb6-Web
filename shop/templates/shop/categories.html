@@ -4,17 +4,39 @@
 
 {% block content %}
   <h2>Список категорій</h2>
+  <div class="section-actions">
+    <a class="btn-action" href="{% url 'shop:category_create' %}">Додати категорію</a>
+  </div>
   {% if categories %}
     <div class="card">
       <ul>
         {% for c in categories %}
           <li>
-            {{ c.id }} — {{ c.name }}
+            {{ c.id }} — <a class="link-inline" href="{% url 'shop:category_detail' c.slug %}">{{ c.name }}</a>
             <span class="badge">товарів: {{ c.products.count }}</span>
+            <a class="link-inline" href="{% url 'shop:category_update' c.slug %}">Редагувати</a>
+            <span class="divider">|</span>
+            <a class="link-danger" href="{% url 'shop:category_delete' c.slug %}">Видалити</a>
           </li>
         {% endfor %}
       </ul>
     </div>
+
+    {% if is_paginated %}
+      <div class="card" style="margin-top:12px;">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; Перша</a>
+          <a href="?page={{ page_obj.previous_page_number }}">Попередня</a>
+        {% endif %}
+
+        <span>Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Наступна</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">Остання &raquo;</a>
+        {% endif %}
+      </div>
+    {% endif %}
   {% else %}
     <div class="card">Категорій поки немає.</div>
   {% endif %}

@@ -1,0 +1,15 @@
+{% extends "shop/layout.html" %}
+
+{% block title %}Видалити товар{% endblock %}
+
+{% block content %}
+  <h2>Видалити товар</h2>
+  <div class="card form-card">
+    <p>Ви впевнені, що хочете видалити товар <strong>{{ object.name }}</strong>?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn-danger">Підтвердити видалення</button>
+      <a class="btn-action" href="{% url 'shop:product_detail' object.slug %}">Скасувати</a>
+    </form>
+  </div>
+{% endblock %}
