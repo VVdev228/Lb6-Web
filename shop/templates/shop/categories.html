@@ -1,0 +1,21 @@
+{% extends "shop/layout.html" %}
+
+{% block title %}Список категорій{% endblock %}
+
+{% block content %}
+  <h2>Список категорій</h2>
+  {% if categories %}
+    <div class="card">
+      <ul>
+        {% for c in categories %}
+          <li>
+            {{ c.id }} — {{ c.name }}
+            <span class="badge">товарів: {{ c.products.count }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <div class="card">Категорій поки немає.</div>
+  {% endif %}
+{% endblock %}

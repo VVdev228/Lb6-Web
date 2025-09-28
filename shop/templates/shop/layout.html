@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Shop{% endblock %}</title>
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+  <header>
+    <h1>Мій магазин</h1>
+    <nav>
+      <a href="{% url 'shop:shop_index' %}">Головна</a> |
+      <a href="{% url 'shop:products_list' %}">Товари</a> |
+      <a href="{% url 'shop:categories_list' %}">Категорії</a>
+    </nav>
+    <hr>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <hr>
+    <p>&copy; 2025 Мій Shop</p>
+  </footer>
+
+  <script src="{% static 'js/script.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

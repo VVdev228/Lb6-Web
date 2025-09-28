@@ -1,18 +1,10 @@
 {% extends "shop/layout.html" %}
 
-{% block title %}Головна{% endblock %}
+{% block title %}Список товарів{% endblock %}
 
 {% block content %}
-  <div class="card">
-    <h2>Вітаємо у магазині!</h2>
-    <p>
-      <a href="{% url 'shop:products_list' %}">Перейти до товарів</a> ·
-      <a href="{% url 'shop:categories_list' %}">Перейти до категорій</a>
-    </p>
-  </div>
-
+  <h2>Список товарів</h2>
   {% if products %}
-    <h3>Останні товари</h3>
     <table class="table">
       <tr>
         <th>ID</th><th>Назва</th><th>Ціна</th><th>Категорія</th>
